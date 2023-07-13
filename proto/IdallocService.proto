@@ -1,0 +1,30 @@
+syntax = "proto3";
+import "BaseMessage.proto";
+option java_multiple_files = true;
+option java_package = "com.xintiaotime.yoy.gen.starter.proto.idalloc";
+option go_package = "gitlab.picopi.cn/picogo/api/proto/idalloc";
+
+package YoyGrpc.JavaIdalloc;
+
+service IdService {
+  rpc getIds (GetIdsRequest) returns (GetIdsReply) {}
+}
+
+message GetIdsRequest {
+  RequestBase requestBase = 1;
+  int32 type = 2;
+  int32 count = 3;
+
+}
+message GetIdsReply {
+  ReplyBase replyBase = 1;
+  int64 id = 2;
+  string ids = 3;
+  int32 status=4;
+}
+// 业务类型
+enum IdAllocTypeEnum {
+  defaultValue = 0;
+  userGiftRecord = 16;   // 用户送礼记录id
+  turntable = 17;     // 转盘抽奖id
+}
