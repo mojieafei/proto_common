@@ -6,7 +6,9 @@ package YmtGrpc.test;
 
 service Test {
 
-    rpc chat(stream HelloRequest) returns (stream HelloReply) {}
+    rpc chat(HelloRequest) returns (HelloReply) {}
+
+    rpc chatHello(stream HelloRequest) returns (stream HelloReply) {}
 
 }
 
