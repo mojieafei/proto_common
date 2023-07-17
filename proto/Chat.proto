@@ -7,7 +7,7 @@ package YmtGrpc.test;
 service ChatService {
 
     // 向某人发送消息 fromUser->toUser
-    rpc sendMessageToSomeone(SendMessageRequest) returns (SendMessageReply) {}
+    rpc chat(SendMessageRequest) returns (SendMessageReply) {}
 
 }
 
