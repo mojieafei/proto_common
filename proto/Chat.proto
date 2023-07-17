@@ -1,22 +1,33 @@
 syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "com.example.server.gen.proto";
-option java_outer_classname = "TestGrpcService";
+option java_outer_classname = "ChatGrpcService";
 package YmtGrpc.test;
 
-service Test {
+service ChatService {
 
-    rpc chat(HelloRequest) returns (HelloReply) {}
-
-    rpc chatHello(stream HelloRequest) returns (stream HelloReply) {}
+    // 向某人发送消息 fromUser->toUser
+    rpc sendMessageToSomeOne(SendMessageRequest) returns (SendMessageReply) {}
 
 }
 
-message HelloRequest{
-    string text = 1 ;
+message SendMessageRequest{
+    uint64 form_user_id = 1;
+    string from_user_name = 2;
+    uint64 to_user_id = 3;
+    string to_user_name = 4;
+    string text = 5;
 }
 
-message HelloReply{
-    string text = 1 ;
+message SendMessageReply{
+    bool result = 1;
+    Code code = 2;    // 考虑到客户端直接调用grpc，返回code码
+}
+
+enum Code{
+    SUCCESS = 0;     // 默认  成功
+    USER_UNDEFINED = 2001;  // 用户不存在
+    MSG_ILLEGAL = 2002; // 消息非法
+    // 只是举例
 }
 
