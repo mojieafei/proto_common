@@ -10,18 +10,27 @@ service ChatService {
     rpc sendMessageToSomeone(SendMessageRequest) returns (SendMessageReply) {}
 
     // 创建链接 user（client）->server
-    rpc getConnection(connectionRequest) returns (stream connectionReply) {}
+    rpc getConnection(ConnectionRequest) returns (stream ConnectionReply) {}
+
+    // 离线失去链接 user（client）->server
+    rpc giveUpConnection(ConnectionRequest) returns (GiveUpConnectionReply) {}
 
 }
 
-message connectionRequest{
-    uint64 user_id = 1;  // 用户 id 建立了链接
+message ConnectionRequest{
+    uint64 user_id = 1;
 }
 
 
-message connectionReply{
-    string text = 1;
+message ConnectionReply{
+    uint64 form_user_id = 1;
+    string text = 2;
 }
+
+message GiveUpConnectionReply{
+    bool result = 1;
+}
+
 
 
 
