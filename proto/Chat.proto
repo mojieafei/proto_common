@@ -9,8 +9,8 @@ service ChatService {
     // 向某人发送消息 fromUser->toUser
     rpc sendMessageToSomeone(SendMessageRequest) returns (SendMessageReply) {}
 
-    // 消息回执 （同理发送消息）fromUser->toUser
-    rpc sendAckToSomeone(SendAckRequest) returns (SendAckReply) {}
+    // 消息扩展，功能设定看枚举 （同理发送消息）fromUser->toUser
+    rpc sendVersatileMessageToSomeone(VersatileMessageRequest) returns (VersatileMessageReply) {}
 
     // 创建链接 user（client）->server
     rpc getConnection(ConnectionRequest) returns (stream ConnectionReply) {}
@@ -20,13 +20,20 @@ service ChatService {
 
 }
 
-message SendAckRequest{
+message VersatileMessageRequest{
     uint64 form_user_id = 1;
     uint64 to_user_id = 2;
-    uint64 message_id = 3;
+    string message_id = 3;
+    OperationType type = 4;
+    string ext = 5; // ext 字段进行更深层次的交互，json数据 switch(OperationType),取不同字段
 }
 
-message SendAckReply{
+message ext{
+    string like = 1;
+    string reply = 2;
+}
+
+message VersatileMessageReply{
     bool result = 1;
     Code code = 2;    // 考虑到客户端直接调用grpc，返回code码
 }
@@ -67,5 +74,13 @@ enum Code{
     USER_UNDEFINED = 2001;  // 用户不存在
     MSG_ILLEGAL = 2002; // 消息非法
     // 只是举例
+}
+
+enum OperationType{
+    READ_DONE = 0;     // 默认  已读
+    LIKE = 1;  // 点赞
+    RECALL = 2; // 撤回
+    REPLY = 3; // 回复
+    // 还能有很多操作类型 ，结合 ext 字段进行更深层次的交互
 }
 
