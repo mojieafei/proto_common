@@ -23,6 +23,12 @@ service ChatService {
 message VersatileMessageRequest{
     uint64 form_user_id = 1;
     uint64 to_user_id = 2;
+    VersatileMessage versatileMessage = 3;
+}
+
+message VersatileMessage{
+    uint64 form_user_id = 1;
+    uint64 to_user_id = 2;
     string message_id = 3;
     OperationType type = 4;
     string ext = 5; // ext 字段进行更深层次的交互，json数据 switch(OperationType),取不同字段
@@ -47,13 +53,12 @@ message ConnectionReply{
     uint64 form_user_id = 1;
     string text = 2;
     string message_id = 3;
+    VersatileMessage versatileMessage = 4; // 不为null则为扩展类消息哦
 }
 
 message GiveUpConnectionReply{
     bool result = 1;
 }
-
-
 
 
 message SendMessageRequest{
