@@ -80,10 +80,11 @@ enum Code{
 }
 
 enum OperationType{
-    READ_DONE = 0;     // 默认  已读
-    LIKE = 1;  // 点赞
-    RECALL = 2; // 撤回
-    REPLY = 3; // 回复
+    DEFAULT = 0;     // 默认 代表不是功能消息
+    READ_DONE = 1;     // 已读
+    LIKE = 2;  // 点赞
+    RECALL = 3; // 撤回
+    REPLY = 4; // 回复
     // 还能有很多操作类型 ，结合 ext 字段进行更深层次的交互
 }
 
