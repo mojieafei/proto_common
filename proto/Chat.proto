@@ -9,12 +9,26 @@ service ChatService {
     // 向某人发送消息 fromUser->toUser
     rpc sendMessageToSomeone(SendMessageRequest) returns (SendMessageReply) {}
 
+    // 消息回执 （同理发送消息）fromUser->toUser
+    rpc sendAckToSomeone(SendAckRequest) returns (SendAckReply) {}
+
     // 创建链接 user（client）->server
     rpc getConnection(ConnectionRequest) returns (stream ConnectionReply) {}
 
     // 离线失去链接 user（client）->server
     rpc giveUpConnection(ConnectionRequest) returns (GiveUpConnectionReply) {}
 
+}
+
+message SendAckRequest{
+    uint64 form_user_id = 1;
+    uint64 to_user_id = 2;
+    uint64 message_id = 3;
+}
+
+message SendAckReply{
+    bool result = 1;
+    Code code = 2;    // 考虑到客户端直接调用grpc，返回code码
 }
 
 message ConnectionRequest{
@@ -25,6 +39,7 @@ message ConnectionRequest{
 message ConnectionReply{
     uint64 form_user_id = 1;
     string text = 2;
+    string message_id = 3;
 }
 
 message GiveUpConnectionReply{
