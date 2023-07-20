@@ -27,11 +27,9 @@ message VersatileMessageRequest{
 }
 
 message VersatileMessage{
-    uint64 form_user_id = 1;
-    uint64 to_user_id = 2;
-    string message_id = 3;
-    OperationType type = 4;
-    string ext = 5; // ext 字段进行更深层次的交互，json数据 switch(OperationType),取不同字段
+    string message_id = 1;
+    OperationType type = 2;
+    string ext = 3; // ext 字段进行更深层次的交互，json数据 switch(OperationType),取不同字段
 }
 
 message ext{
