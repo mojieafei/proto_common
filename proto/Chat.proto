@@ -52,6 +52,7 @@ message ConnectionReply{
     string text = 2;
     string message_id = 3;
     VersatileMessage versatileMessage = 4; // 不为null则为扩展类消息哦
+    uint64 timestamp = 5;  // 消息时间
 }
 
 message GiveUpConnectionReply{
